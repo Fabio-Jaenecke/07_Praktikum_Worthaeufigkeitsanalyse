@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -16,17 +17,17 @@ import java.util.Map.Entry;
  */
 public class Worthaeufigkeitsanalyse {
 
-	private static HashSet<String> satzzeichen = new HashSet<String>();
+	static HashSet<String> satzzeichen = new HashSet<String>();
 	static {
 		satzzeichen.add(".");
 		satzzeichen.add(",");
 		satzzeichen.add("?");
 		satzzeichen.add("!");
-		satzzeichen.add("''");
+//		satzzeichen.add("''");
 		satzzeichen.add(":");
 		satzzeichen.add(";");
 	}
-	private HashMap<String, Integer> woerterHaeufigkeit = new HashMap<String, Integer>();
+	HashMap<String, Integer> woerterHaeufigkeit = new HashMap<String, Integer>();
 
 	/**
 	 * Nimmt die uebergebene Zeichenkette in die Worthaeufigkeitsanalyse auf.
@@ -43,16 +44,24 @@ public class Worthaeufigkeitsanalyse {
 
 			if (!satzzeichen.contains(wort)) {
 				if (woerterHaeufigkeit.containsKey(wort)) {
-					Integer zaehler = woerterHaeufigkeit.get(wort);
-					woerterHaeufigkeit.put(wort, zaehler++);
+					for (Entry<String, Integer> eintrag: woerterHaeufigkeit.entrySet()) {
+						if (eintrag.getKey().equals(wort)) {
+							eintrag.setValue((eintrag.getValue()) +1);
+						}
+					}
 				} else {
 					woerterHaeufigkeit.put(wort, 1);
 				}
 			}
 		}
 	}
-
-	private String entferneSatzzeichen(String wort) {
+	
+//	Hilfsmethode für's Testen	
+		public HashMap<String, Integer> gibWoerterHaeufigkeit(){
+			return woerterHaeufigkeit;
+		}
+		
+	String entferneSatzzeichen(String wort) {
 		boolean satzzeichenGefunden;
 
 		do {
@@ -72,7 +81,8 @@ public class Worthaeufigkeitsanalyse {
 
 		return wort;
 	}
-
+	
+	
 	/**
 	 * Ausgabe der Worthaeufigkeitsanalyse auf der Konsole.
 	 */
@@ -87,9 +97,9 @@ public class Worthaeufigkeitsanalyse {
 	public static void main(String[] args) {
 		Worthaeufigkeitsanalyse hauefigkeitsanalyse = new Worthaeufigkeitsanalyse();
 		hauefigkeitsanalyse
-				.verarbeiteText("Fritz sagt: \"Die Softwareentwicklung ist meine Leidenschaft!\"");
+				.verarbeiteText("Fritz sagt: \"Die Softwareentwicklung Softwareentwicklung Softwareentwicklung ist meine Leidenschaft!\"");
 		hauefigkeitsanalyse
-				.verarbeiteText("Hans meint, er teile die Leidenschaft mit Fritz.");
+				.verarbeiteText("Hans meint, er teile Softwareentwicklung die Leidenschaft mit Fritz.");
 		hauefigkeitsanalyse
 				.verarbeiteText("John fuegt hinzu, dass die Softwareentwicklung nicht nur aus Programmieren bestehe, sondern es sich dabei um einen komplexen Prozess, bestehend aus vielen kleinen Komponenten, handelt.\"");
 		hauefigkeitsanalyse.druckeStatistik();
