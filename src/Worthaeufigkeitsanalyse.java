@@ -25,9 +25,9 @@ public class Worthaeufigkeitsanalyse {
 //		satzzeichen.add("''");
 		satzzeichen.add(":");
 		satzzeichen.add(";");
+		satzzeichen.add("\"");
 	}
 	HashMap<String, Integer> woerterHaeufigkeit = new HashMap<String, Integer>();
-
 	/**
 	 * Nimmt die uebergebene Zeichenkette in die Worthaeufigkeitsanalyse auf.
 	 * 
@@ -41,7 +41,7 @@ public class Worthaeufigkeitsanalyse {
 			wort = wort.toLowerCase();
 			wort = entferneSatzzeichen(wort);
 
-			if (!satzzeichen.contains(wort)) {
+			if (!satzzeichen.contains(wort) && !wort.isEmpty()) {
 				if (woerterHaeufigkeit.containsKey(wort)) {
 					for (Entry<String, Integer> eintrag: woerterHaeufigkeit.entrySet()) {
 						if (eintrag.getKey().equals(wort)) {
@@ -58,6 +58,13 @@ public class Worthaeufigkeitsanalyse {
 //	Hilfsmethode für's Testen	
 		public HashMap<String, Integer> gibWoerterHaeufigkeit(){
 			return woerterHaeufigkeit;
+		}
+		
+//	Hilfsmethode für's Testen			
+		public String[] gibAlleSatzZeichen() {
+			String[] allesatzzeichen = new String[satzzeichen.size()];//for JUnit
+			allesatzzeichen = satzzeichen.toArray(allesatzzeichen);	//for JUnit
+			return allesatzzeichen;
 		}
 		
 	String entferneSatzzeichen(String wort) {
